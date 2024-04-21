@@ -6,7 +6,7 @@ service = {
     manifest = {
         name = "ShadowCraft",
         fileName = "shadowcraft.lua",
-        version = "v1.0.4",
+        version = "v1.1.0",
         directory = "/lib/"
     },
 
