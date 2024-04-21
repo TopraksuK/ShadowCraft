@@ -20,9 +20,36 @@ service = {
             return nil
         end
 
-        local file = fs.open(dir, "w")
+        local file = fs.open("/tempInstall/temp.lua", "w")
         file.write(content)
         file.close()
+
+        local fileManifest = require(file).manifest
+
+        local installed = fs.exists(dir)
+
+        if installed then
+            local installedManifest = require(dir).manifest
+
+            if installedManifest.version == fileManifest.version then
+                print(string.format("%s is installed and up to date.", installedManifest.Name))
+                return true
+            else
+                print(string.format("A new release for %s is found.\nVersion: %s>%s\nWould you like to install it? (y/n)", installedManifest.Name, installedManifest.version, fileManifest.version))
+                local answer = service.getAnswer()
+
+                if not answer then
+                    return true
+                end
+            end
+        else
+            print(string.format("%s is going to be installed.\nVersion: %s\nWould you like to install it? (y/n)", fileManifest.Name, fileManifest.version))
+            local answer = service.getAnswer()
+
+            if not answer then
+                return true
+            end
+        end
     end,
 
     getDate = function()
