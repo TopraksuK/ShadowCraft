@@ -54,4 +54,6 @@ service = {
     end,
 }
 
+service.printManifest()
+
 return service
