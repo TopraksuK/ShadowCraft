@@ -68,7 +68,7 @@ service = {
 
     checkInstallation = function(dir)
         if fs.exists(dir) then
-            print("Installation directory exists."),
+            print("Installation directory exists.")
             return true
         else
             print("Installation directory does not exists.")
