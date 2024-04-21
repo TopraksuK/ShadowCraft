@@ -5,8 +5,13 @@ local service = {}
 service = {
     manifest = {
         name = "ShadowCraft",
-        version = "v1.0.1",
+        version = "v1.0.2",
+        directory = "/shadowcraft/"
     },
+
+    install = function(args)
+
+    end,
 
     getDate = function()
         return os.date("%d/%m/%Y %T")
@@ -36,6 +41,27 @@ service = {
         end
     end,
 
+    getAnswer = function()
+        local answer
+        repeat
+            answer = read()
+            answer = string.lower(answer)
+            if answer ~= "y" and answer ~= "n" then
+                error("Invalid answer. (y/n)", 0)
+            end
+        until answer == "y" or answer == "n"
+        
+        return answer    
+    end,
+
+    checkInstallation = function(dir)
+        if fs.exists(dir) then
+            print("Installation directory exists.")
+        else
+            print("Installation directory does not exists.")
+        end
+    end,
+
     printFancy = function(color, string)
         term.setTextColor(colors[color])
         print(string)
@@ -62,14 +88,14 @@ service = {
         end
     end,
 
-    printManifest = function()
-        service.printFancy("green", string.format("%s loaded.", service.manifest.name))
-        service.printFancy("green", string.format("Version: %s", service.manifest.version))
+    printManifest = function(manifest)
+        service.printFancy("green", string.format("%s loaded.", manifest.name))
+        service.printFancy("green", string.format("Version: %s", manifest.version))
     end,
 }
 
 -- [Setup] --
 
-service.printManifest()
+service.printManifest(service.manifest)
 
 return service
