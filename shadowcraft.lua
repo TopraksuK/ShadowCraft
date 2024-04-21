@@ -5,7 +5,7 @@ local service = {}
 service = {
     manifest = {
         name = "ShadowCraft",
-        version = "v1.0.2",
+        version = "v1.0.3",
         directory = "/shadowcraft/"
     },
 
@@ -89,7 +89,7 @@ service = {
     end,
 
     printManifest = function(manifest)
-        service.printFancy("green", string.format("%s loaded.", manifest.name))
+        service.printFancy("green", string.format("\n%s loaded.", manifest.name))
         service.printFancy("green", string.format("Version: %s", manifest.version))
     end,
 }
