@@ -6,7 +6,7 @@ service = {
     manifest = {
         name = "ShadowCraft",
         fileName = "shadowcraft.lua",
-        version = "v1.1.0",
+        version = "v1.1.1",
         directory = "/lib/"
     },
 
@@ -24,7 +24,7 @@ service = {
         file.write(content)
         file.close()
 
-        local fileManifest = require(file).manifest
+        local fileManifest = require("/tempInstall/temp.lua").manifest
 
         local installed = fs.exists(dir)
 
@@ -50,6 +50,14 @@ service = {
                 return true
             end
         end
+
+        local installation = fs.open(fileManifest.directory, "w")
+        installation.write(fs.open("/tempInstall/temp.lua", "r").readAll())
+        installation.close()
+
+        fs.delete("/tempInstall/")
+
+        service.printFancy(string.format("%s %s successfully installed.", fileManifest.name, fileManifest.version))
     end,
 
     getDate = function()
