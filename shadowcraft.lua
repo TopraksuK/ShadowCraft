@@ -5,12 +5,24 @@ local service = {}
 service = {
     manifest = {
         name = "ShadowCraft",
-        version = "v1.0.3",
-        directory = "/shadowcraft/"
+        fileName = "shadowcraft.lua",
+        version = "v1.0.4",
+        directory = "/lib/"
     },
 
-    install = function(args)
+    install = function(url, dir)
+        local tempFolder = fs.makeDir("/tempInstall/")
 
+        local content = http.get(url).readAll()
+
+        if not content then
+            printError("Could not connect to the URL website.")
+            return nil
+        end
+
+        local file = fs.open(dir, "w")
+        file.write(content)
+        file.close()
     end,
 
     getDate = function()
@@ -25,7 +37,7 @@ service = {
         if WirelessModem then
             service.printFancy("green", "Wireless Modem found.")
         else
-            error("Wireless Modem not found.", 0)
+            printError("Wireless Modem not found.")
         end
     end,
 
@@ -37,7 +49,7 @@ service = {
         if WiredModem then
             service.printFancy("green", "Wired Modem found.")
         else
-            error("Wired Modem not found.", 0)
+            printError("Wired Modem not found.", 0)
         end
     end,
 
@@ -47,18 +59,20 @@ service = {
             answer = read()
             answer = string.lower(answer)
             if answer ~= "y" and answer ~= "n" then
-                error("Invalid answer. (y/n)", 0)
+                printError("Invalid answer. (y/n)")
             end
         until answer == "y" or answer == "n"
         
-        return answer    
+        return answer == "y" and true or false
     end,
 
     checkInstallation = function(dir)
         if fs.exists(dir) then
-            print("Installation directory exists.")
+            print("Installation directory exists."),
+            return true
         else
             print("Installation directory does not exists.")
+            return false
         end
     end,
 
@@ -97,5 +111,6 @@ service = {
 -- [Setup] --
 
 service.printManifest(service.manifest)
+service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/shadowcraft.lua", service.manifest.directory .. service.manifest.fileName)
 
 return service
