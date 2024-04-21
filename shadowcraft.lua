@@ -1,9 +1,11 @@
+-- [Objects] --
+
 local service = {}
 
 service = {
     manifest = {
         name = "ShadowCraft",
-        version = "v1.0.0",
+        version = "v1.0.1",
     },
 
     getDate = function()
@@ -19,6 +21,18 @@ service = {
             service.printFancy("green", "Wireless Modem found.")
         else
             error("Wireless Modem not found.", 0)
+        end
+    end,
+
+    getWiredModem = function()
+        service.printFancy("yellow", "Searching for Wired Network...")
+
+        local WiredModem = peripheral.find("modem", function(name, modem) return not modem.isWireless() end)
+
+        if WiredModem then
+            service.printFancy("green", "Wired Modem found.")
+        else
+            error("Wired Modem not found.", 0)
         end
     end,
 
@@ -49,10 +63,12 @@ service = {
     end,
 
     printManifest = function()
-        service.printFancy("green", "ShadowCraft loaded.")
+        service.printFancy("green", string.format("%s loaded.", service.manifest.name))
         service.printFancy("green", string.format("Version: %s", service.manifest.version))
     end,
 }
+
+-- [Setup] --
 
 service.printManifest()
 
