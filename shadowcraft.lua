@@ -140,7 +140,7 @@ service = {
 
 service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
-if fs.exists("manifest") then
+if fs.exists(fs.getDir(shell.getRunningProgram()) .. "/manifest") then
     service.printManifest(require("manifest"))
 end
 
