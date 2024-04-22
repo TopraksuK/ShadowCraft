@@ -27,11 +27,11 @@ service = {
             local installedManifest = require(installationDirectory .. "manifest")
 
             if tempManifest.version == installedManifest.version then
-                print(string.format("%s is installed and up to date.", installedManifest.name))
+                print(string.format("\n%s is installed and up to date.", installedManifest.name))
                 fs.delete("/tempInstall/")
                 return true
             else
-                print(string.format("A new release for %s is found.\nVersion: %s>%s\nWould you like to install it? (y/n)", installedManifest.name, installedManifest.version, tempManifest.version))
+                print(string.format("\nA new release for %s is found.\nVersion: %s>%s\nWould you like to install it? (y/n)", installedManifest.name, installedManifest.version, tempManifest.version))
                 local answer = service.getAnswer()
 
                 if not answer then
@@ -40,7 +40,7 @@ service = {
                 end
             end
         else
-            print(string.format("%s is going to be installed.\nVersion: %s\nWould you like to install it? (y/n)", tempManifest.name, tempManifest.version))
+            print(string.format("\n%s is going to be installed.\nVersion: %s\nWould you like to install it? (y/n)", tempManifest.name, tempManifest.version))
             local answer = service.getAnswer()
 
             if not answer then
@@ -58,7 +58,7 @@ service = {
 
         fs.delete("/tempInstall/")
 
-        service.printFancy("green",string.format("%s %s successfully installed.", tempManifest.name, tempManifest.version))
+        service.printFancy("green",string.format("\n%s %s successfully installed.", tempManifest.name, tempManifest.version))
     end,
 
     getDate = function()
@@ -138,6 +138,6 @@ service = {
 
 service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
-service.printManifest(service.manifest)
+service.printManifest(require("manifest"))
 
 return service
