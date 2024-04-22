@@ -13,11 +13,11 @@ service = {
             return nil
         end
 
-        local tempFolder = fs.makeDir("/tempInstall/")
+        fs.makeDir("/tempInstall/")
 
-        local tempManifest = fs.open("/tempInstall/manifest.lua", "w")
-        tempManifest.write(manifestContent)
-        tempManifest.close()
+        local tempManifestFile = fs.open("/tempInstall/manifest.lua", "w")
+        tempManifestFile.write(manifestContent)
+        tempManifestFile.close()
 
         local tempManifest = require("/tempInstall/manifest")
 
