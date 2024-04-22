@@ -7,4 +7,4 @@ Currently, it is under development.
 
 ### Installation
 Run the following terminal command in the computer:
-wget run https://github.com/TopraksuK/shadowcraft/releases/latest/download/
+wget run https://github.com/TopraksuK/shadowcraft/releases/latest/download/shadowcraft.lua
