@@ -142,8 +142,6 @@ service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/downlo
 
 if fs.exists("manifest") then
     service.printManifest(require("manifest"))
-else
-    printError("Manifest file not found. If this is your first time installing or updating ShadowCraft, ignore this error.")
 end
 
 return service
