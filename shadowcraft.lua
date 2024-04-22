@@ -143,7 +143,7 @@ service = {
 service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
 if shell.getRunningProgram() ~= "rom/programs/http/wget.lua" then
-    service.printManifest(require("manifest"))
+    service.printManifest(require("/lib/shadowcraft/manifest"))
 end
 
 return service
