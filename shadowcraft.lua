@@ -4,7 +4,7 @@ local service = {}
 
 service = {
     install = function(url)
-        local manifestContent = http.get(url .. "manifest.lua").readAll
+        local manifestContent = http.get(url .. "manifest.lua").readAll()
 
         if not manifestContent then
             printError("Could not connect to the URL website and fetch manifest.")
