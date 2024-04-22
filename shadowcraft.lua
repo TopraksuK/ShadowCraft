@@ -10,7 +10,7 @@ service = {
 
         if not manifestContent then
             printError("Could not connect to the URL website and fetch manifest.")
-            return nil
+            return false
         end
 
         fs.makeDir("/tempInstall/")
@@ -47,7 +47,7 @@ service = {
 
             if not answer then
                 fs.delete("/tempInstall/")
-                return true
+                return false
             end
         end
         
@@ -140,12 +140,11 @@ service = {
 
 -- [Setup] --
 
-if fs.getDir(shell.getRunningProgram()) ~= "/lib/shadowcraft/manifest" then
-    service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
-end
+service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
-if fs.exists("/lib/shadowcraft/manifest.lua") then
-    service.printManifest(require("/lib/shadowcraft/manifest"))
+print(shell.getRunningProgram())
+if fs.exists(fs.getDir(shell.getRunningProgram()) .. "/manifest.lua") then
+    service.printManifest(require("manifest"))
 end
 
 return service
