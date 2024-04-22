@@ -11,7 +11,12 @@ service = {
             return nil
         end
 
-        if fs.exists("/tempInstall/") then fs.delete("/tempInstall/") end
+        if fs.exists("/tempInstall/") then 
+            fs.delete("/tempInstall/") 
+            repeat
+                sleep(0.5)
+            until not fs.exists("/tempInstall/")
+        end
 
         local tempFolder = fs.makeDir("/tempInstall/")
 
@@ -31,6 +36,9 @@ service = {
             if tempManifest.version == installedManifest.version then
                 print(string.format("\n%s is installed and up to date.", installedManifest.name))
                 fs.delete("/tempInstall/")
+                repeat
+                    sleep(0.5)
+                until not fs.exists("/tempInstall/")
                 return true
             else
                 print(string.format("\nA new release for %s is found.\nVersion: %s > %s\nWould you like to install it? (y/n)", installedManifest.name, installedManifest.version, tempManifest.version))
@@ -38,6 +46,9 @@ service = {
 
                 if not answer then
                     fs.delete("/tempInstall/")
+                    repeat
+                        sleep(0.5)
+                    until not fs.exists("/tempInstall/")
                     return true
                 end
 
@@ -49,6 +60,9 @@ service = {
 
             if not answer then
                 fs.delete("/tempInstall/")
+                repeat
+                    sleep(0.5)
+                until not fs.exists("/tempInstall/")
                 return true
             end
         end
@@ -61,6 +75,9 @@ service = {
         end
 
         fs.delete("/tempInstall/")
+        repeat
+            sleep(0.5)
+        until not fs.exists("/tempInstall/")
 
         service.printFancy("green",string.format("\n%s %s successfully installed.", tempManifest.name, tempManifest.version))
     end,
