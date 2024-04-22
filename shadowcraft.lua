@@ -66,6 +66,8 @@ service = {
                 return true
             end
         end
+        
+        fs.delete(installationDirectory)
 
         for i, content in pairs(tempManifest.files) do
             local download = http.get(url .. content[1]).readAll()
