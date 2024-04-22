@@ -140,6 +140,6 @@ service = {
 
 service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
-service.printManifest(require("./manifest"))
+service.printManifest(require("manifest"))
 
 return service
