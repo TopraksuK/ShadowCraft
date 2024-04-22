@@ -143,7 +143,7 @@ service = {
 service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
 if fs.exists("/lib/shadowcraft/manifest.lua") then
-    service.printManifest(require("manifest"))
+    service.printManifest(require("/lib/shadowcraft/manifest.lua"))
 end
 
 return service
