@@ -23,9 +23,7 @@ service = {
 
         local installationDirectory = tempManifest.directory
 
-        local installed = fs.exists(installationDirectory)
-
-        if installed then
+        if fs.exists(installationDirectory) then
             local installedManifest = require(installationDirectory .. "manifest")
 
             if tempManifest.version == installedManifest.version then
@@ -142,7 +140,9 @@ service = {
 
 -- [Setup] --
 
-service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
+if fs.getDir(shell.getRunningProgram()) ~= "/lib/shadowcraft/manifest" then
+    service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
+end
 
 if fs.exists("/lib/shadowcraft/manifest.lua") then
     service.printManifest(require("/lib/shadowcraft/manifest"))
