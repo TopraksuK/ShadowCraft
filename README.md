@@ -1,7 +1,7 @@
 # ShadowCraft
 ## Shadowork for ComputerCraft
 ### What is ShadowCraft?
-ShadowCraft is the Shadowork's extension for ComputerCraft, a super computer mod for Minecraft, that has its own installer, and tools for the othe libraries tha I've made.
+ShadowCraft is the Shadowork's extension for ComputerCraft, a super computer mod for Minecraft, that has its own installer, and tools for the other libraries tha I've made.
 
 Currently, it is under development.
 
