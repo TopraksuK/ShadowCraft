@@ -2,7 +2,7 @@ local manifest = {}
 
 manifest = {
     name = "ShadowCraft",
-    version = "v1.1.14",
+    version = "v1.1.15",
     files = {
         {"manifest.lua", ""},
         {"shadowcraft.lua", ""},
