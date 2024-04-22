@@ -142,8 +142,7 @@ service = {
 
 service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
-print(shell.getRunningProgram())
-if fs.exists(fs.getDir(shell.getRunningProgram()) .. "/manifest.lua") then
+if shell.getRunningProgram() ~= "rom/programs/http/wget.lua" then
     service.printManifest(require("manifest"))
 end
 
