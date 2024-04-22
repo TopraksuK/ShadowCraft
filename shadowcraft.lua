@@ -51,14 +51,14 @@ service = {
 
         for i, content in pairs(tempManifest.files) do
             local download = http.get(url .. content[1]).readAll()
-            local installation = fs.open(tempManifest.directory .. content[2], "w")
+            local installation = fs.open(tempManifest.directory .. content[2] .. content[1], "w")
             installation.write(download)
             installation.close()
         end
 
         fs.delete("/tempInstall/")
 
-        service.printFancy(string.format("%s %s successfully installed.", tempManifest.name, tempManifest.version))
+        service.printFancy("green",string.format("%s %s successfully installed.", tempManifest.name, tempManifest.version))
     end,
 
     getDate = function()
