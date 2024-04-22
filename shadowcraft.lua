@@ -3,52 +3,56 @@
 local service = {}
 
 service = {
-    manifest = {
-        name = "ShadowCraft",
-        fileName = "shadowcraft.lua",
-        version = "v1.1.1",
-        directory = "/lib/"
-    },
+    install = function(url)
+        local manifestContent = http.get(url .. "manifest.lua").readAll
 
-    install = function(url, dir)
-        local tempFolder = fs.makeDir("/tempInstall/")
-
-        local content = http.get(url).readAll()
-
-        if not content then
-            printError("Could not connect to the URL website.")
+        if not manifestContent then
+            printError("Could not connect to the URL website and fetch manifest.")
             return nil
         end
 
-        local file = fs.open("/tempInstall/temp.lua", "w")
-        file.write(content)
-        file.close()
+        local tempFolder = fs.makeDir("/tempInstall/")
 
-        local fileManifest = require("/tempInstall/temp.lua").manifest
+        local tempManifest = fs.open("/tempInstall/manifest.lua", "w")
+        tempManifest.write(manifestContent)
+        tempManifest.close()
 
-        local installed = fs.exists(dir)
+        local tempManifest = require("/tempInstall/manifest.lua")
+
+        local installationDirectory = tempManifest.directory
+
+        local installed = fs.exists(installationDirectory)
 
         if installed then
-            local installedManifest = require(dir).manifest
+            local installedManifest = require(installationDirectory .. "manifest.lua")
 
-            if installedManifest.version == fileManifest.version then
-                print(string.format("%s is installed and up to date.", installedManifest.Name))
+            if tempManifest.version == installedManifest.version then
+                print(string.format("%s is installed and up to date.", installedManifest.name))
+                fs.delete("/tempInstall/")
                 return true
             else
-                print(string.format("A new release for %s is found.\nVersion: %s>%s\nWould you like to install it? (y/n)", installedManifest.Name, installedManifest.version, fileManifest.version))
+                print(string.format("A new release for %s is found.\nVersion: %s>%s\nWould you like to install it? (y/n)", installedManifest.name, installedManifest.version, tempManifest.version))
                 local answer = service.getAnswer()
 
                 if not answer then
+                    fs.delete("/tempInstall/")
                     return true
                 end
             end
         else
-            print(string.format("%s is going to be installed.\nVersion: %s\nWould you like to install it? (y/n)", fileManifest.Name, fileManifest.version))
+            print(string.format("%s is going to be installed.\nVersion: %s\nWould you like to install it? (y/n)", tempManifest.name, tempManifest.version))
             local answer = service.getAnswer()
 
             if not answer then
+                fs.delete("/tempInstall/")
                 return true
             end
+        end
+
+        local contents = {}
+
+        for i, content in pairs(tempManifest.files) do
+            contents[i] = http.get(url .. content[1]).readAll()
         end
 
         local installation = fs.open(fileManifest.directory, "w")
@@ -101,16 +105,6 @@ service = {
         return answer == "y" and true or false
     end,
 
-    checkInstallation = function(dir)
-        if fs.exists(dir) then
-            print("Installation directory exists.")
-            return true
-        else
-            print("Installation directory does not exists.")
-            return false
-        end
-    end,
-
     printFancy = function(color, string)
         term.setTextColor(colors[color])
         print(string)
@@ -145,7 +139,8 @@ service = {
 
 -- [Setup] --
 
+service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
+
 service.printManifest(service.manifest)
-service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/shadowcraft.lua", service.manifest.directory .. service.manifest.fileName)
 
 return service
