@@ -140,6 +140,10 @@ service = {
 
 service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
-service.printManifest(require("manifest"))
+if fs.exists("manifest") then
+    service.printManifest(require("manifest"))
+else
+    printError("Manifes file not found. If this is your first time installing or updating ShadowCraft, ignore this error.")
+end
 
 return service
