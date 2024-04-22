@@ -11,6 +11,8 @@ service = {
             return nil
         end
 
+        if fs.exists("/tempInstall/") then fs.delete("/tempInstall/") end
+
         local tempFolder = fs.makeDir("/tempInstall/")
 
         local tempManifest = fs.open("/tempInstall/manifest.lua", "w")
