@@ -31,7 +31,7 @@ service = {
                 fs.delete("/tempInstall/")
                 return true
             else
-                print(string.format("\nA new release for %s is found.\nVersion: %s>%s\nWould you like to install it? (y/n)", installedManifest.name, installedManifest.version, tempManifest.version))
+                print(string.format("\nA new release for %s is found.\nVersion: %s > %s\nWould you like to install it? (y/n)", installedManifest.name, installedManifest.version, tempManifest.version))
                 local answer = service.getAnswer()
 
                 if not answer then
@@ -143,7 +143,7 @@ service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/downlo
 if fs.exists("manifest") then
     service.printManifest(require("manifest"))
 else
-    printError("Manifes file not found. If this is your first time installing or updating ShadowCraft, ignore this error.")
+    printError("Manifest file not found. If this is your first time installing or updating ShadowCraft, ignore this error.")
 end
 
 return service
