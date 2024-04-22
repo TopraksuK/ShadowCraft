@@ -17,14 +17,14 @@ service = {
         tempManifest.write(manifestContent)
         tempManifest.close()
 
-        local tempManifest = require("/tempInstall/manifest.lua")
+        local tempManifest = require("/tempInstall/manifest")
 
         local installationDirectory = tempManifest.directory
 
         local installed = fs.exists(installationDirectory)
 
         if installed then
-            local installedManifest = require(installationDirectory .. "manifest.lua")
+            local installedManifest = require(installationDirectory .. "manifest")
 
             if tempManifest.version == installedManifest.version then
                 print(string.format("%s is installed and up to date.", installedManifest.name))
