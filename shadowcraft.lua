@@ -38,6 +38,8 @@ service = {
                     fs.delete("/tempInstall/")
                     return true
                 end
+
+                fs.delete(tempManifest.directory)
             end
         else
             print(string.format("\n%s is going to be installed.\nVersion: %s\nWould you like to install it? (y/n)", tempManifest.name, tempManifest.version))
@@ -138,6 +140,6 @@ service = {
 
 service.install("https://github.com/TopraksuK/shadowcraft/releases/latest/download/")
 
-service.printManifest(require("manifest"))
+service.printManifest(require("./manifest"))
 
 return service
