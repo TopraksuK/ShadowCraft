@@ -24,7 +24,7 @@ service = {
     end,
 
     getWirelessModem = function()
-        service.printFancy("yellow", "Searching for Wireless Modem...")
+        service.printFancy("yellow", "\nSearching for Wireless Modem...")
 
         local WirelessModem = peripheral.find("modem", function(name, modem) return modem.isWireless() end)
 
@@ -38,7 +38,7 @@ service = {
     end,
 
     getWiredModem = function()
-        service.printFancy("yellow", "Searching for Wired Network...")
+        service.printFancy("yellow", "\nSearching for Wired Network...")
 
         local WiredModem = peripheral.find("modem", function(name, modem) return not modem.isWireless() end)
 
