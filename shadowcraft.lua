@@ -7,6 +7,22 @@ service = {
         return os.date("%d/%m/%Y %T")
     end,
 
+    getMonitor = function()
+        service.printFancy("yellow","\nSearching for a Monitor...")
+
+        local monitor = peripheral.find("monitor")
+        local width, height = monitor.GetSize()
+
+        if monitor then
+            service.printFancy("green", "Monitor found.")
+            print(string.format("Monitor Size: %sx%s", width, height))
+        else
+            printError("Monitor not found.")
+        end
+
+        return monitor
+    end,
+
     getWirelessModem = function()
         service.printFancy("yellow", "Searching for Wireless Modem...")
 
@@ -17,6 +33,8 @@ service = {
         else
             printError("Wireless Modem not found.")
         end
+
+        return WirelessModem
     end,
 
     getWiredModem = function()
@@ -29,6 +47,8 @@ service = {
         else
             printError("Wired Modem not found.", 0)
         end
+
+        return WiredModem
     end,
 
     getAnswer = function()
