@@ -11,7 +11,7 @@ service = {
         service.printFancy("yellow","\nSearching for a Monitor...")
 
         local monitor = peripheral.find("monitor")
-        local width, height = monitor.GetSize()
+        local width, height = monitor.getSize()
 
         if monitor then
             service.printFancy("green", "Monitor found.")
